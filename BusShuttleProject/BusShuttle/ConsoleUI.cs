@@ -69,7 +69,13 @@ public class ConsoleUI {
 				                    new SelectionPrompt<string>()
 				                        .Title("What do you want to do?")
 				                        .AddChoices(new[] {
-				                            "show busiest stop","add stop","delete stop", "list stops", "end"
+				                            "show busiest stop",
+											"add stop",
+											"delete stop",
+											"add driver",
+											"delete driver",
+											"list stops",
+											"end"
 				                        }));
 
                 if(command=="add stop") {
@@ -81,7 +87,16 @@ public class ConsoleUI {
 				                .Title("Select a stop")
 				                .AddChoices(dataManager.Stops));
                     dataManager.RemoveStop(selectedStop);
-                } else if(command=="list stops") {
+                } else if(command=="add driver") {
+					var newDriverName = AnsiConsole.Prompt(new TextPrompt<string>("Enter new driver name:"));
+                    dataManager.AddDriver(new Driver(newDriverName));
+				} else if(command=="delete driver") {
+					Driver selectedDriver = AnsiConsole.Prompt(
+				            new SelectionPrompt<Driver>()
+				                .Title("Select a driver")
+				                .AddChoices(dataManager.Drivers));
+                    dataManager.RemoveDriver(selectedDriver);
+				} else if(command=="list stops") {
                     var table = new Table();
 
                     table.AddColumn("Stop Name");
